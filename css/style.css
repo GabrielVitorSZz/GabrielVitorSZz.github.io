@@ -1,6 +1,6 @@
 :root {
   --primary-color: #0000FF;   /* Azul para destaque (botões, ícones, bordas) */
-  --secondary-color: #000000; /* Preto para o fundo do cabeçalho e rodapé */
+  --secondary-color: #0g00000; /* Preto para o fundo do cabeçalho e rodapé */
   --background-color: #F5F5F5; /* Cinza claro para o fundo principal */
   --text-color: #212529;      /* Tom de cinza escuro para o texto principal */
   --card-bg: #FFFFFF;         /* Branco para o fundo dos cards de projeto */
