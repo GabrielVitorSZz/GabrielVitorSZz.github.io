@@ -1,144 +1,148 @@
-/* Reset Básico e Configurações Gerais */
+:root {
+  --primary-color: #0000FF;   /* Azul para destaque (botões, ícones, bordas) */
+  --secondary-color: #0g00000; /* Preto para o fundo do cabeçalho e rodapé */
+  --background-color: #F5F5F5; /* Cinza claro para o fundo principal */
+  --text-color: #212529;      /* Tom de cinza escuro para o texto principal */
+  --card-bg: #FFFFFF;         /* Branco para o fundo dos cards de projeto */
+  --border-radius: 8px;
+  --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
-
-  /* --- CONFIGURAÇÃO DA IMAGEM DE FUNDO --- */
-  background-image: url('../img/imagemFundo.jpg'); /* 1. Caminho para a imagem */
-  background-size: cover;                         /* 2. Faz a imagem cobrir toda a tela */
-  background-position: center;                    /* 3. Centraliza a imagem */
-  background-attachment: fixed;                   /* 4. Deixa a imagem fixa durante o scroll (efeito parallax) */
-  background-repeat: no-repeat;                   /* 5. Evita que a imagem se repita */
-
-  color: #f0f0f0; /* Cor padrão do texto alterada para cinza claro para ser legível no fundo escuro */
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 .container {
-  width: 90%;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: auto;
-  padding: 2rem 0;
+  overflow: hidden;
+  padding: 0 2rem;
 }
 
-/* Header e Navegação */
 header {
-  background-color: rgba(10, 10, 10, 0.85); /* Fundo do header semi-transparente para se destacar */
-  padding: 1rem 0;
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 2rem 0;
   text-align: center;
-  border-bottom: 3px solid #e74c3c; /* Linha vermelha para separar */
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(5px); /* Efeito de vidro fosco no header */
 }
 
 header h1 {
   font-size: 2.5rem;
-  color: #ffffff;
   margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
 header p {
   font-size: 1.2rem;
-  color: #cccccc;
-  margin-bottom: 1rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
 }
 
-header nav a {
-  color: #ffffff;
+nav a {
+  color: #fff;
   text-decoration: none;
-  margin: 0 15px;
-  font-weight: 700;
-  transition: color 0.3s ease;
+  margin: 0 1rem;
+  font-size: 1.1rem;
+  transition: color 0.3s;
 }
 
-header nav a:hover {
-  color: #3498db; /* Azul ao passar o mouse */
+nav a:hover {
+  color: var(--primary-color);
 }
 
-/* Seções Principais */
-main section {
-  padding: 4rem 2rem;
-  margin: 2rem auto;
-  background-color: rgba(25, 25, 25, 0.8); /* Fundo das seções semi-transparente */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px); /* Efeito de vidro fosco */
+section {
+  padding: 4rem 0;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.2rem;
-  color: #e74c3c; /* Títulos das seções em vermelho */
-  border-bottom: 2px solid #3498db; /* Sublinhado em azul */
-  padding-bottom: 0.5rem;
-  display: inline-block;
+#sobre {
+  background: #fff;
 }
 
-.section-title-wrapper {
-  text-align: center;
-}
-
-/* Sobre Mim */
-#sobre .bio {
+.bio {
   display: flex;
   align-items: center;
   gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.bio .text {
+  flex: 1;
 }
 
 .profile-pic {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 3px solid #3498db; /* Borda azul na foto */
+  object-fit: cover;
+  border: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-light);
 }
 
-/* Habilidades */
+#habilidades {
+  background: var(--background-color);
+}
+
+#habilidades h2, #projetos h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  border-bottom: 2px solid var(--primary-color);
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
 .skills-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
 .skill-group {
-  flex-basis: 30%;
-  min-width: 280px;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
 }
 
 .skill-group h3 {
-  color: #3498db; /* Títulos dos grupos em azul */
+  color: var(--primary-color);
   margin-bottom: 1rem;
-  border-left: 3px solid #e74c3c;
-  padding-left: 10px;
+  font-weight: 700;
 }
 
 .skill-group ul {
-  list-style-type: none;
+  list-style: none;
+  padding-left: 1rem;
 }
 
-.skill-group li {
+.skill-group ul li {
   margin-bottom: 0.5rem;
-  padding: 5px;
-  transition: background-color 0.3s ease;
+  position: relative;
+  padding-left: 1.5rem;
 }
 
-.skill-group li:hover {
-  background-color: rgba(231, 76, 60, 0.1);
+.skill-group ul li:before {
+  content: '•';
+  color: var(--primary-color);
+  position: absolute;
+  left: 0;
 }
 
-/* Projetos */
+#projetos {
+  background: #fff;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -146,65 +150,57 @@ h2 {
 }
 
 .project-card {
-  background-color: rgba(40, 40, 40, 0.9);
-  border-radius: 8px;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  transition: transform 0.3s;
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+  transform: translateY(-5px);
 }
 
 .project-card img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
 }
 
-.project-card-content {
-  padding: 1.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+.project-card h3 {
+  margin: 1rem 0 0.5rem;
+  color: var(--secondary-color);
 }
 
-.project-card-content h3 {
-  color: #e74c3c; /* Vermelho */
-  margin-bottom: 0.5rem;
+.project-card p {
+  padding: 0 1rem 1rem;
+  font-size: 0.9rem;
+  color: #555;
 }
 
-.project-card-content p {
-  flex-grow: 1;
-  margin-bottom: 1rem;
-}
-
-.btn {
+.project-card .btn {
   display: inline-block;
-  background-color: #e74c3c; /* Botão vermelho */
+  background: var(--primary-color);
   color: #fff;
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
   text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  text-align: center;
+  border-radius: 50px;
+  transition: background-color 0.3s;
 }
 
-.btn:hover {
-  background-color: #c0392b; /* Vermelho mais escuro */
+.project-card .btn:hover {
+  background: #0056b3;
 }
 
-/* Footer */
+.destaque-vermelho {
+  color: #FF0000; /* Classe para textos em vermelho */
+}
+
 footer {
+  background: var(--secondary-color);
+  color: #fff;
   text-align: center;
-  padding: 2rem;
-  margin-top: 2rem;
-  background-color: rgba(10, 10, 10, 0.9);
-  color: #aaa;
-  border-top: 3px solid #3498db; /* Linha azul para o footer */
+  padding: 1rem 0;
 }
