@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #007bff;
-  --secondary-color: #343a40;
-  --background-color: #f8f9fa;
-  --text-color: #212529;
-  --card-bg: #ffffff;
+  --primary-color: #0000FF;   /* Azul para destaque (botões, ícones, bordas) */
+  --secondary-color: #000000; /* Preto para o fundo do cabeçalho e rodapé */
+  --background-color: #F5F5F5; /* Cinza claro para o fundo principal */
+  --text-color: #212529;      /* Tom de cinza escuro para o texto principal */
+  --card-bg: #FFFFFF;         /* Branco para o fundo dos cards de projeto */
   --border-radius: 8px;
   --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -192,6 +192,10 @@ section {
 
 .project-card .btn:hover {
   background: #0056b3;
+}
+
+.destaque-vermelho {
+  color: #FF0000; /* Classe para textos em vermelho */
 }
 
 footer {
