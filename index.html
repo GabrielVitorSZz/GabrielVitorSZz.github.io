@@ -1449,115 +1449,115 @@
 </footer>
 
 <script>
-  /* ── CURSOR ─────────────────────────────── */
-  const cursor = document.getElementById('cursor');
-  const ring   = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+/* ── CURSOR ─────────────────────────────── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+/* hover effects */
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '18px'; cursor.style.height = '18px';
+    ring.style.width = '52px'; ring.style.height = '52px';
   });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    ring.style.width = '38px'; ring.style.height = '38px';
+  });
+});
 
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animRing);
+/* ── HAMBURGER ──────────────────────── */
+const ham   = document.getElementById('hamburger');
+const links = document.getElementById('navLinks');
+ham.addEventListener('click', () => {
+  links.classList.toggle('open');
+  const spans = ham.querySelectorAll('span');
+  if (links.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity   = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   }
-  animRing();
-
-  /* hover effects */
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '18px'; cursor.style.height = '18px';
-      ring.style.width = '52px'; ring.style.height = '52px';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '10px'; cursor.style.height = '10px';
-      ring.style.width = '38px'; ring.style.height = '38px';
-    });
+});
+links.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    links.classList.remove('open');
+    ham.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   });
+});
 
-  /* ── HAMBURGER ──────────────────────── */
-  const ham   = document.getElementById('hamburger');
-  const links = document.getElementById('navLinks');
-  ham.addEventListener('click', () => {
-    links.classList.toggle('open');
-    const spans = ham.querySelectorAll('span');
-    if (links.classList.contains('open')) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
-      spans[1].style.opacity   = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
-    } else {
-      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-    }
+/* ── SCROLL REVEAL ──────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
   });
-  links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      links.classList.remove('open');
-      ham.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── NAVBAR SCROLL ──────────────────── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 30
+    ? '0 2px 30px rgba(0,0,0,0.5)'
+    : 'none';
+});
+
+/* ── ANO FOOTER ─────────────────────── */
+document.getElementById('ano').textContent = new Date().getFullYear();
+
+/* ── FORM ───────────────────────────── */
+document.getElementById('btnEnviar').addEventListener('click', () => {
+  const nome  = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const msg   = document.getElementById('mensagem').value.trim();
+
+  if (!nome || !email || !msg) {
+    alert('Por favor, preencha todos os campos.');
+    return;
+  }
+
+  const mailBody = encodeURIComponent(
+    `Nome: ${nome}\nE-mail: ${email}\n\n${msg}`
+  );
+  window.location.href =
+    `mailto:gabrielvitorx7@gmail.com?subject=Contato pelo portfólio – ${nome}&body=${mailBody}`;
+
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+});
+
+/* ── HERO STAGGER ANIMATION ─────────── */
+window.addEventListener('load', () => {
+  const items = document.querySelectorAll(
+    '.hero-badge, .hero-name, .hero-title, .hero-tagline, .hero-actions, .hero-socials, .hero-stats'
+  );
+  items.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    setTimeout(() => {
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 200 + i * 110);
   });
-
-  /* ── SCROLL REVEAL ──────────────────── */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  /* ── NAVBAR SCROLL ──────────────────── */
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    nav.style.boxShadow = window.scrollY > 30
-      ? '0 2px 30px rgba(0,0,0,0.5)'
-      : 'none';
-  });
-
-  /* ── ANO FOOTER ─────────────────────── */
-  document.getElementById('ano').textContent = new Date().getFullYear();
-
-  /* ── FORM ───────────────────────────── */
-  document.getElementById('btnEnviar').addEventListener('click', () => {
-    const nome  = document.getElementById('nome').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const msg   = document.getElementById('mensagem').value.trim();
-
-    if (!nome || !email || !msg) {
-      alert('Por favor, preencha todos os campos.');
-      return;
-    }
-
-    const mailBody = encodeURIComponent(
-      `Nome: ${nome}\nE-mail: ${email}\n\n${msg}`
-    );
-    window.location.href =
-      `mailto:gabrielvitorx7@gmail.com?subject=Contato pelo portfólio – ${nome}&body=${mailBody}`;
-
-    document.getElementById('form-area').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-  });
-
-  /* ── HERO STAGGER ANIMATION ─────────── */
-  window.addEventListener('load', () => {
-    const items = document.querySelectorAll(
-      '.hero-badge, .hero-name, .hero-title, .hero-tagline, .hero-actions, .hero-socials, .hero-stats'
-    );
-    items.forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      setTimeout(() => {
-        el.style.transition = 'opacity .6s ease, transform .6s ease';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 200 + i * 110);
-    });
-  });
+});
 </script>
 </body>
 </html>
