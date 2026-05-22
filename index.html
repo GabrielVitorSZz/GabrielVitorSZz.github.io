@@ -3,106 +3,1561 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Gabriel Vítor — Full Stack Developer</title>
+  <meta name="description" content="Portfólio de Gabriel Vítor Santos Oliveira, desenvolvedor Full Stack especializado em Java, Quarkus, React e arquiteturas modernas. Brasília - DF.">
+  <meta property="og:title" content="Gabriel Vítor — Full Stack Developer">
+  <meta property="og:description" content="Desenvolvedor Full Stack | Java, Quarkus, React, Docker | Brasília, DF">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0a0f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #080810;
+      --bg-2:        #0d0d1a;
+      --bg-card:     rgba(13, 18, 35, 0.8);
+      --neon:        #00d4ff;
+      --neon-2:      #0066ff;
+      --neon-glow:   rgba(0, 212, 255, 0.15);
+      --accent:      #7b2fff;
+      --text:        #e8eaf0;
+      --text-muted:  #6b7280;
+      --border:      rgba(0, 212, 255, 0.12);
+      --radius:      14px;
+      --font-head:   'Syne', sans-serif;
+      --font-body:   'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ──────────────────────────── */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--neon);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, opacity .2s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 38px; height: 38px;
+      border: 1.5px solid rgba(0,212,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .12s ease, width .2s, height .2s;
+    }
+    a:hover ~ #cursor, button:hover ~ #cursor { width: 18px; height: 18px; }
+
+    /* ── NOISE OVERLAY ──────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+    }
+
+    /* ── GRID BG LINES ──────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,8,16,0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s;
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--neon); }
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .3px;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--neon);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--neon); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--neon);
+      color: var(--neon);
+      padding: .45rem 1.2rem;
+      border-radius: 6px;
+      font-size: .88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s;
+      font-family: var(--font-body);
+    }
+    .nav-cta:hover {
+      background: var(--neon);
+      color: var(--bg);
+    }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); transition: all .3s; }
+
+    /* ── SECTIONS COMMON ──────────────────────── */
+    section { position: relative; z-index: 2; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--neon);
+    }
+    h2.section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 70%);
+      top: -10%; left: -15%;
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(123,47,255,0.08) 0%, transparent 70%);
+      bottom: 5%; right: -10%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      color: var(--neon);
+      padding: .35rem .9rem;
+      border-radius: 100px;
+      font-size: .78rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--neon);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .4; transform: scale(.8); }
+    }
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: .6rem;
+    }
+    .hero-name .line-neon { color: var(--neon); }
+    .hero-title {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      letter-spacing: .5px;
+    }
+    .hero-tagline {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-tagline strong { color: var(--neon); font-weight: 500; }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--neon);
+      color: var(--bg);
+      padding: .75rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .2s;
+      font-family: var(--font-head);
+    }
+    .btn-primary:hover {
+      background: #33ddff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,212,255,0.3);
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: .75rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+      transform: translateY(-2px);
+    }
+    .hero-socials {
+      display: flex;
+      gap: 1.2rem;
+    }
+    .hero-socials a {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    .hero-socials a:hover { color: var(--neon); }
+    .hero-socials a svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* Avatar */
+    .hero-avatar-wrap {
+      position: relative;
+    }
+    .hero-avatar {
+      width: 280px; height: 280px;
+      border-radius: 24px;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+      border: 1px solid var(--border);
+      filter: grayscale(15%);
+      transition: filter .3s;
+    }
+    .hero-avatar:hover { filter: grayscale(0%); }
+    .avatar-ring {
+      position: absolute;
+      inset: -12px;
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 30px;
+      z-index: 1;
+      animation: rotateRing 8s linear infinite;
+    }
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .avatar-dot {
+      position: absolute;
+      width: 10px; height: 10px;
+      background: var(--neon);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--neon);
+    }
+
+    /* stats row */
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat-item { text-align: center; }
+    .hero-stat-num {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--neon);
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: .75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── SOBRE ────────────────────────────────── */
+    #sobre {
+      padding: 7rem 0;
+      background: var(--bg-2);
+    }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .sobre-text p {
+      color: #a0a8b8;
+      margin-bottom: 1.2rem;
+      font-size: 1.02rem;
+    }
+    .sobre-text p strong { color: var(--text); font-weight: 500; }
+    .diferenciais {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .diferencial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.3rem;
+      backdrop-filter: blur(10px);
+      transition: border-color .2s, transform .2s;
+    }
+    .diferencial-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      transform: translateY(-3px);
+    }
+    .diferencial-icon {
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+      display: block;
+    }
+    .diferencial-card h4 {
+      font-family: var(--font-head);
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+      color: var(--text);
+    }
+    .diferencial-card p {
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .formacao {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+    .formacao h3 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--neon);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: .8rem;
+    }
+    .formacao-item {
+      border-left: 2px solid var(--border);
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .formacao-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 6px;
+      width: 8px; height: 8px;
+      background: var(--neon);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon);
+    }
+    .formacao-item h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; }
+    .formacao-item span { color: var(--text-muted); font-size: .85rem; }
+
+    /* ── HABILIDADES ─────────────────────────── */
+    #habilidades {
+      padding: 7rem 0;
+    }
+    .skills-header { text-align: center; margin-bottom: 4rem; }
+    .skills-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-cat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: border-color .3s, transform .3s;
+    }
+    .skill-cat:hover {
+      border-color: rgba(0,212,255,0.3);
+      transform: translateY(-4px);
+    }
+    .skill-cat-title {
+      font-family: var(--font-head);
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--neon);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+    }
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(0,212,255,0.07);
+      border: 1px solid rgba(0,212,255,0.15);
+      color: var(--text);
+      padding: .38rem .85rem;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-weight: 500;
+      transition: all .2s;
+    }
+    .skill-tag:hover {
+      background: rgba(0,212,255,0.15);
+      border-color: rgba(0,212,255,0.4);
+      color: var(--neon);
+    }
+    .skill-tag i { font-size: 1rem; }
+
+    /* ── PROJETOS ────────────────────────────── */
+    #projetos {
+      padding: 7rem 0;
+      background: var(--bg-2);
+    }
+    .projetos-header { text-align: center; margin-bottom: 4rem; }
+    .projetos-header .section-label { justify-content: center; }
+    .projetos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 1.5rem;
+    }
+    /* featured project spans 2 columns */
+    .project-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative;
+    }
+    .project-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.06);
+    }
+    .project-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter .4s;
+    }
+    .project-card:hover .project-img { filter: grayscale(0%); }
+    .project-card.featured .project-img { height: 100%; min-height: 320px; }
+    .project-body { padding: 1.8rem; }
+    .project-card.featured .project-body {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .project-type {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--neon);
+      margin-bottom: .7rem;
+    }
+    .project-name {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: .7rem;
+      color: var(--text);
+    }
+    .project-card.featured .project-name { font-size: 1.8rem; }
+    .project-desc {
+      color: #8892a4;
+      font-size: .9rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: 1.5rem;
+    }
+    .badge {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.15);
+      color: var(--neon);
+      padding: .2rem .65rem;
+      border-radius: 5px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+    .badge-purple {
+      background: rgba(123,47,255,0.1);
+      border-color: rgba(123,47,255,0.25);
+      color: #b87fff;
+    }
+    .badge-green {
+      background: rgba(0,255,136,0.08);
+      border-color: rgba(0,255,136,0.2);
+      color: #00ff88;
+    }
+    .project-links {
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+    .btn-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .45rem 1.1rem;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-sm-solid {
+      background: var(--neon);
+      color: var(--bg);
+    }
+    .btn-sm-solid:hover {
+      background: #33ddff;
+      box-shadow: 0 4px 20px rgba(0,212,255,0.3);
+    }
+    .btn-sm-ghost {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-sm-ghost:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    /* highlight note */
+    .project-highlight {
+      background: rgba(0,212,255,0.06);
+      border-left: 2px solid var(--neon);
+      padding: .8rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.2rem;
+      font-size: .83rem;
+      color: #a0c8d8;
+    }
+    .project-highlight strong { color: var(--neon); }
+
+    /* ── DECISÕES TÉCNICAS ──────────────────── */
+    #arquitetura {
+      padding: 7rem 0;
+    }
+    .arq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .arq-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: border-color .3s;
+    }
+    .arq-card:hover { border-color: rgba(0,212,255,0.3); }
+    .arq-num {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: rgba(0,212,255,0.15);
+      margin-bottom: .5rem;
+      line-height: 1;
+    }
+    .arq-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: .8rem;
+      color: var(--text);
+    }
+    .arq-card p {
+      color: #8892a4;
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+    .arq-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(123,47,255,0.12);
+      border: 1px solid rgba(123,47,255,0.25);
+      color: #b87fff;
+      padding: .25rem .7rem;
+      border-radius: 5px;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+
+    /* ── CONTATO ──────────────────────────── */
+    #contato {
+      padding: 7rem 0;
+      background: var(--bg-2);
+    }
+    .contato-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contato-info h2 { margin-bottom: 1rem; }
+    .contato-info p {
+      color: #8892a4;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    .contato-links {
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+    }
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .95rem;
+      transition: color .2s;
+      padding: .8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all .2s;
+    }
+    .contato-link:hover {
+      color: var(--neon);
+      border-color: var(--border);
+      background: rgba(0,212,255,0.04);
+    }
+    .contato-link-icon {
+      width: 38px; height: 38px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contato-link-icon svg { width: 18px; height: 18px; fill: var(--neon); }
+
+    /* Formulário */
+    .contato-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .85rem 1.1rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: .95rem;
+      transition: border-color .2s;
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(0,212,255,0.5);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+    }
+    .form-group textarea { height: 130px; }
+    .btn-form {
+      width: 100%;
+      background: var(--neon);
+      color: var(--bg);
+      border: none;
+      padding: .9rem;
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-form:hover {
+      background: #33ddff;
+      box-shadow: 0 6px 28px rgba(0,212,255,0.3);
+      transform: translateY(-2px);
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      color: #00ff88;
+      font-size: 1.05rem;
+    }
+
+    /* ── FOOTER ───────────────────────────── */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-left { color: var(--text-muted); font-size: .85rem; }
+    .footer-left strong { color: var(--text); }
+    .footer-tech {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .footer-tech span {
+      background: rgba(0,212,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: .2rem .65rem;
+      border-radius: 5px;
+      font-size: .72rem;
+    }
+
+    /* ── SCROLL ANIMATIONS ─────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ── MOBILE ────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; flex-direction: column; }
+      .nav-links.open {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        top: 60px;
+        background: rgba(8,8,16,0.97);
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        font-size: 1.2rem;
+        z-index: 99;
+      }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-avatar-wrap { display: none; }
+      .hero-actions { justify-content: center; }
+      .hero-socials { justify-content: center; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .arq-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-template-columns: 1fr; }
+      .contato-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .diferenciais { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 2.5rem; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <h1>Gabriel Vítor</h1>
-    <p>Desenvolvedor Backend</p>
-    <nav>
-      <a href="#sobre">Sobre Mim</a>
-      <a href="#habilidades">Habilidades</a>
-      <a href="#projetos">Projetos</a>
-      <a href="https://www.linkedin.com/in/gabrielvitorszz/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/GabrielVitorSZz" target="_blank">GitHub</a>
-    </nav>
-  </div>
-</header>
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<main>
-  <section id="sobre" class="container">
-    <div class="bio">
-      <img src="img/minhaFoto.jpg" alt="Sua foto de perfil" class="profile-pic">
-      <div class="text">
-        <h2>Sobre Mim</h2>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">GV<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#habilidades">Skills</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#arquitetura">Arquitetura</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="mailto:gabrielvitorx7@gmail.com" class="nav-cta">Entrar em contato →</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ───────────────────────────── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">Disponível para estágio</div>
+        <h1 class="hero-name">
+          Gabriel<br>
+          <span class="line-neon">Vítor.</span>
+        </h1>
+        <p class="hero-title">Full Stack Developer — Brasília, DF</p>
+        <p class="hero-tagline">
+          Construo sistemas completos com <strong>Java + Quarkus</strong> no back-end
+          e <strong>React + TypeScript</strong> no front-end. Apaixonado por
+          arquitetura limpa, segurança com JWT e soluções que escalam.
+        </p>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Ver Projetos
+          </a>
+          <a href="#contato" class="btn-outline">Entrar em Contato</a>
+        </div>
+        <div class="hero-socials">
+          <a href="https://github.com/GabrielVitorSZz" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/gabrielvitorszz/" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">3+</span>
+            <span class="hero-stat-label">Anos estudando</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">5</span>
+            <span class="hero-stat-label">Projetos no GitHub</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num">10+</span>
+            <span class="hero-stat-label">Tecnologias</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-avatar-wrap">
+        <div class="avatar-ring"></div>
+        <img src="img/minhaFoto.jpg" alt="Gabriel Vítor" class="hero-avatar"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <!-- Fallback placeholder -->
+        <div style="display:none; width:280px; height:280px; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(123,47,255,0.15)); border-radius:24px; border:1px solid var(--border); align-items:center; justify-content:center; flex-direction:column; gap:.5rem; position:relative; z-index:2;">
+          <span style="font-family:var(--font-head); font-size:4rem; font-weight:800; color:var(--neon);">GV</span>
+          <span style="color:var(--text-muted); font-size:.8rem;">Full Stack Dev</span>
+        </div>
+        <div class="avatar-dot" style="top:-5px; right:40px;"></div>
+        <div class="avatar-dot" style="bottom:40px; left:-5px; background:var(--accent); box-shadow:0 0 12px var(--accent);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOBRE ───────────────────────────── -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-text reveal">
+        <span class="section-label">Quem sou</span>
+        <h2 class="section-title">Sobre mim</h2>
         <p>
-          Constantemente em busca de projetos palpáveis e oportunidades que me desafiem a evoluir como desenvolvedor, tanto no aspecto técnico quanto humano.
+          Sou desenvolvedor Full Stack com <strong>3 anos de estudos intensos</strong>, cursando
+          Bacharelado em Sistemas da Informação no IFG. Minha jornada começou com Java,
+          mas rapidamente me aprofundei em todo o ciclo de desenvolvimento — da modelagem
+          do banco de dados ao deploy em containers.
+        </p>
+        <p>
+          O que me diferencia não é só o código que escrevo, mas a forma como
+          <strong>penso em sistemas</strong>: sempre considerando segurança, escalabilidade
+          e manutenibilidade. Já implementei autenticação com JWT + RSA 2048, ORM com
+          Hibernate, e orquestração com Docker e Kubernetes.
+        </p>
+        <p>
+          Busco minha primeira oportunidade profissional para transformar aprendizado
+          em impacto real — pronto para contribuir desde o primeiro dia.
+        </p>
+        <div class="diferenciais">
+          <div class="diferencial-card reveal reveal-delay-1">
+            <span class="diferencial-icon">🔐</span>
+            <h4>Segurança first</h4>
+            <p>JWT + RSA, BCrypt, RBAC em projetos reais</p>
+          </div>
+          <div class="diferencial-card reveal reveal-delay-2">
+            <span class="diferencial-icon">🏗️</span>
+            <h4>Arquitetura limpa</h4>
+            <p>MVC, DAO, BO layers, ORM + JPQL</p>
+          </div>
+          <div class="diferencial-card reveal reveal-delay-3">
+            <span class="diferencial-icon">🐳</span>
+            <h4>Cloud ready</h4>
+            <p>Docker + Kubernetes para ambientes modernos</p>
+          </div>
+          <div class="diferencial-card reveal reveal-delay-4">
+            <span class="diferencial-icon">📊</span>
+            <h4>Dados & BI</h4>
+            <p>Power BI com ETL completo e PostgreSQL</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="formacao">
+          <h3>🎓 Formação</h3>
+          <div class="formacao-item">
+            <h4>Bacharelado em Sistemas da Informação</h4>
+            <span>Instituto Federal de Goiás — IFG<br>Conclusão prevista: 2027</span>
+          </div>
+          <div class="formacao-item" style="margin-bottom: 0">
+            <h4>Inglês Avançado</h4>
+            <span>Leitura fluente de documentações técnicas internacionais</span>
+          </div>
+        </div>
+
+        <div class="formacao" style="margin-top: 1.2rem;">
+          <h3>⚡ O que me motiva</h3>
+          <p style="color:#8892a4; font-size:.9rem; line-height:1.7;">
+            Arquiteturas que resolvem problemas reais, código que outros devs conseguem
+            manter, e sistemas que funcionam sob pressão. Estou constantemente estudando
+            novos padrões e contribuindo com projetos no GitHub.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HABILIDADES ─────────────────────── -->
+<section id="habilidades">
+  <div class="container">
+    <div class="skills-header reveal">
+      <span class="section-label">Tecnologias</span>
+      <h2 class="section-title">Stack técnica</h2>
+      <p style="color:var(--text-muted); max-width:500px; margin:0 auto; font-size:.95rem;">
+        Ferramentas que uso para construir sistemas do zero ao deploy
+      </p>
+    </div>
+    <div class="skills-categories">
+      <div class="skill-cat reveal reveal-delay-1">
+        <div class="skill-cat-title">⚡ Back-end</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-java-plain colored"></i> Java</span>
+          <span class="skill-tag"><i class="devicon-quarkus-original colored"></i> Quarkus</span>
+          <span class="skill-tag">JAX-RS</span>
+          <span class="skill-tag">CDI</span>
+          <span class="skill-tag">JPA / Hibernate</span>
+          <span class="skill-tag">JPQL</span>
+          <span class="skill-tag">JWT + RSA 2048</span>
+          <span class="skill-tag">BCrypt</span>
+          <span class="skill-tag">RESTful API</span>
+          <span class="skill-tag">Maven</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal reveal-delay-2">
+        <div class="skill-cat-title">🎨 Front-end</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-html5-plain colored"></i> HTML5</span>
+          <span class="skill-tag"><i class="devicon-css3-plain colored"></i> CSS3</span>
+          <span class="skill-tag"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+          <span class="skill-tag"><i class="devicon-react-original colored"></i> React</span>
+          <span class="skill-tag"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+          <span class="skill-tag"><i class="devicon-vitejs-plain colored"></i> Vite</span>
+          <span class="skill-tag">Fetch API</span>
+          <span class="skill-tag">LocalStorage</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal reveal-delay-3">
+        <div class="skill-cat-title">🗄️ Banco de Dados</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+          <span class="skill-tag"><i class="devicon-mysql-plain colored"></i> MySQL</span>
+          <span class="skill-tag">H2 (dev)</span>
+          <span class="skill-tag">JDBC</span>
+          <span class="skill-tag">Hibernate Validator</span>
+          <span class="skill-tag">ORM</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal reveal-delay-4">
+        <div class="skill-cat-title">☁️ Cloud & DevOps</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-docker-plain colored"></i> Docker</span>
+          <span class="skill-tag"><i class="devicon-kubernetes-plain colored"></i> Kubernetes</span>
+          <span class="skill-tag"><i class="devicon-git-plain colored"></i> Git</span>
+          <span class="skill-tag"><i class="devicon-github-original colored"></i> GitHub</span>
+          <span class="skill-tag">GitHub Pages</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">ETL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJETOS ────────────────────────── -->
+<section id="projetos">
+  <div class="container">
+    <div class="projetos-header reveal">
+      <span class="section-label">Portfólio</span>
+      <h2 class="section-title">Projetos em destaque</h2>
+      <p style="color:var(--text-muted); max-width:480px; margin:.5rem auto 0; font-size:.95rem;">
+        Sistemas construídos do zero com atenção à arquitetura, segurança e boas práticas
+      </p>
+    </div>
+
+    <div class="projetos-grid">
+
+      <!-- FEATURED: Consultório -->
+      <div class="project-card featured reveal">
+        <img src="img/projetoWeb.png" alt="Sistema de Consultório Médico"
+             class="project-img"
+             onerror="this.style.background='linear-gradient(135deg,rgba(0,212,255,.1),rgba(123,47,255,.1))'; this.style.height='100%'; this.removeAttribute('src')">
+        <div class="project-body">
+          <div class="project-type">⭐ Projeto Principal</div>
+          <div class="project-name">Sistema de Gestão de Consultório Médico</div>
+          <div class="project-highlight">
+            <strong>Destaque técnico:</strong> API REST completa com autenticação JWT + RSA 2048,
+            controle de acesso por papéis (ADMIN, MEDICO, RECEPCIONISTA) e trilha de auditoria persistida.
+          </div>
+          <p class="project-desc">
+            Sistema web full stack para gerenciar pacientes, médicos, consultas e fichas de
+            atendimento. Back-end em Java com Quarkus e JPA + Hibernate; front-end em HTML/CSS/JS
+            com Fetch API; banco PostgreSQL. Implementa regras de negócio como verificação de conflito
+            de horário e restrição de ficha ao médico responsável.
+          </p>
+          <div class="project-stack">
+            <span class="badge">Java</span>
+            <span class="badge">Quarkus</span>
+            <span class="badge">JAX-RS</span>
+            <span class="badge">JPA + Hibernate</span>
+            <span class="badge">JWT + RSA</span>
+            <span class="badge">BCrypt</span>
+            <span class="badge">PostgreSQL</span>
+            <span class="badge">Docker</span>
+            <span class="badge badge-green">HTML / CSS / JS</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/GabrielVitorSZz/Consultorio" target="_blank" class="btn-sm btn-sm-solid">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              Ver Código
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- E-commerce -->
+      <div class="project-card reveal reveal-delay-1">
+        <img src="img/projetoWeb.png" alt="E-commerce de Roupas" class="project-img"
+             onerror="this.style.background='linear-gradient(135deg,rgba(0,212,255,.08),rgba(0,102,255,.08))'; this.removeAttribute('src')">
+        <div class="project-body">
+          <div class="project-type">Front-end React</div>
+          <div class="project-name">E-commerce de Roupas</div>
+          <p class="project-desc">
+            SPA completa com catálogo dinâmico, filtros por categoria, carrinho de compras
+            funcional, busca em tempo real e layout 100% responsivo. Construída com
+            React + TypeScript + Vite.
+          </p>
+          <div class="project-stack">
+            <span class="badge badge-green">React</span>
+            <span class="badge badge-green">TypeScript</span>
+            <span class="badge badge-green">Vite</span>
+            <span class="badge">CSS</span>
+            <span class="badge">JSON</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/GabrielVitorSZz/Sistema-de-E-commerce-de-roupas" target="_blank" class="btn-sm btn-sm-ghost">Ver Código →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jogo da Memória -->
+      <div class="project-card reveal reveal-delay-2">
+        <img src="img/projetoJavaFX.jpg" alt="Jogo da Memória JavaFX" class="project-img"
+             onerror="this.style.background='linear-gradient(135deg,rgba(123,47,255,.1),rgba(0,212,255,.08))'; this.removeAttribute('src')">
+        <div class="project-body">
+          <div class="project-type">Desktop — JavaFX</div>
+          <div class="project-name">Jogo da Memória MVC</div>
+          <p class="project-desc">
+            Aplicação desktop aplicando arquitetura MVC, troca de cenas com FXML,
+            persistência de dados em JSON e manipulação de arquivos. Projeto acadêmico
+            com foco em boas práticas.
+          </p>
+          <div class="project-stack">
+            <span class="badge badge-purple">JavaFX</span>
+            <span class="badge badge-purple">MVC</span>
+            <span class="badge badge-purple">FXML</span>
+            <span class="badge">JSON</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/GabrielVitorSZz/JogoDaMemoriaFacul" target="_blank" class="btn-sm btn-sm-ghost">Ver Código →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard -->
+      <div class="project-card reveal reveal-delay-3">
+        <img src="img/dashboard.png" alt="Dashboard Power BI" class="project-img"
+             onerror="this.style.background='linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,212,255,.08))'; this.removeAttribute('src')">
+        <div class="project-body">
+          <div class="project-type">Data Analytics</div>
+          <div class="project-name">Dashboard de Satisfação — Aviação</div>
+          <p class="project-desc">
+            Pipeline ETL completo para transformar dados brutos de pesquisas em
+            insights visuais sobre satisfação de passageiros. Processo desde
+            limpeza de dados até visualizações interativas.
+          </p>
+          <div class="project-stack">
+            <span class="badge badge-green">Power BI</span>
+            <span class="badge badge-green">ETL</span>
+            <span class="badge">Análise de Dados</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/GabrielVitorSZz/Dashboard" target="_blank" class="btn-sm btn-sm-ghost">Ver Código →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRUD -->
+      <div class="project-card reveal reveal-delay-4">
+        <img src="img/projetoCRUD.png" alt="Gerenciador de Usuários CRUD" class="project-img"
+             onerror="this.style.background='linear-gradient(135deg,rgba(0,212,255,.06),rgba(0,66,255,.06))'; this.removeAttribute('src')">
+        <div class="project-body">
+          <div class="project-type">Back-end Java</div>
+          <div class="project-name">Gerenciador de Usuários CRUD</div>
+          <p class="project-desc">
+            Sistema back-end com CRUD completo usando JDBC direto com PostgreSQL.
+            Operações de criação, leitura, atualização e exclusão com interface
+            Swing — base sólida de persistência em Java.
+          </p>
+          <div class="project-stack">
+            <span class="badge">Java</span>
+            <span class="badge">JDBC</span>
+            <span class="badge badge-purple">PostgreSQL</span>
+            <span class="badge">Swing</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/GabrielVitorSZz/projetoCRUD" target="_blank" class="btn-sm btn-sm-ghost">Ver Código →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── DECISÕES TÉCNICAS ─────────────── -->
+<section id="arquitetura">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom:1rem;">
+      <span class="section-label">Raciocínio técnico</span>
+      <h2 class="section-title">Arquitetura & Decisões</h2>
+      <p style="color:var(--text-muted); max-width:540px; margin:.5rem auto 0; font-size:.95rem;">
+        Por que escolhi cada tecnologia — além de "aparece no currículo"
+      </p>
+    </div>
+    <div class="arq-grid">
+      <div class="arq-card reveal reveal-delay-1">
+        <div class="arq-num">01</div>
+        <h3>Por que Quarkus e não Spring Boot?</h3>
+        <p>
+          Quarkus tem startup sub-segundo e consome menos memória que o Spring Boot —
+          ideal para containers. No sistema de consultório, isso significa que um
+          pod Kubernetes pode escalar de 0 a ativo em menos de 1s. Além disso,
+          a integração nativa com MicroProfile JWT simplificou a implementação
+          de autenticação com RSA 2048.
+        </p>
+        <span class="arq-tag">Performance & Cloud-native</span>
+      </div>
+      <div class="arq-card reveal reveal-delay-2">
+        <div class="arq-num">02</div>
+        <h3>JWT + RSA 2048 ao invés de HMAC simétrico</h3>
+        <p>
+          Optei por RSA assimétrico para que serviços futuros possam validar
+          tokens sem precisar da chave secreta — apenas com a chave pública.
+          Isso prepara a arquitetura para microsserviços, onde o serviço de
+          autenticação é separado dos demais. BCrypt com fator 12 para senhas
+          garante resistência a ataques de força bruta.
+        </p>
+        <span class="arq-tag">Segurança</span>
+      </div>
+      <div class="arq-card reveal reveal-delay-3">
+        <div class="arq-num">03</div>
+        <h3>Camada BO separada da Resource (Controller)</h3>
+        <p>
+          Mantive uma camada Business Object (BO) entre o Resource e o DAO
+          para isolar regras de negócio (como verificação de conflito de horário
+          e restrição de ficha ao médico responsável) da lógica HTTP. Isso facilita
+          testes unitários nas regras de negócio sem precisar mockar a request.
+        </p>
+        <span class="arq-tag">Arquitetura limpa</span>
+      </div>
+      <div class="arq-card reveal reveal-delay-4">
+        <div class="arq-num">04</div>
+        <h3>PostgreSQL em prod, H2 em desenvolvimento</h3>
+        <p>
+          Usar H2 em memória nos testes e desenvolvimento elimina dependências
+          externas no CI/CD e acelera o ciclo de feedback. Em produção, o
+          PostgreSQL garante transações ACID, suporte a tipos avançados e
+          melhor performance em consultas JPQL complexas.
+        </p>
+        <span class="arq-tag">Banco de Dados</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTATO ────────────────────────── -->
+<section id="contato">
+  <div class="container">
+    <div class="contato-inner">
+      <div class="contato-info reveal">
+        <span class="section-label">Vamos conversar</span>
+        <h2 class="section-title">Entre em<br>contato</h2>
+        <p>
+          Estou buscando minha primeira oportunidade de estágio. Se você tem
+          um desafio interessante ou quer conhecer melhor meu trabalho,
+          manda uma mensagem — respondo rápido.
+        </p>
+        <div class="contato-links">
+          <a href="mailto:gabrielvitorx7@gmail.com" class="contato-link">
+            <div class="contato-link-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            gabrielvitorx7@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/gabrielvitorszz/" target="_blank" class="contato-link">
+            <div class="contato-link-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            linkedin.com/in/gabrielvitorszz
+          </a>
+          <a href="https://github.com/GabrielVitorSZz" target="_blank" class="contato-link">
+            <div class="contato-link-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </div>
+            github.com/GabrielVitorSZz
+          </a>
+        </div>
+        <p style="margin-top:2.5rem; color:var(--text-muted); font-style:italic; font-size:.9rem;">
+          "O melhor momento para começar foi ontem. O segundo melhor momento é agora."
         </p>
       </div>
-    </div>
-  </section>
 
-  <section id="habilidades" class="container">
-    <h2>Habilidades</h2>
-    <div class="skills-container">
-      <div class="skill-group">
-        <h3>Back-end & Banco de Dados</h3>
-        <ul>
-          <li>Java: Orientação a Objetos (POO), JavaFX, Swing, MVC, JDBC</li>
-          <li>Bancos de Dados: PostgreSQL e MySQL</li>
-          <li>Controle de Versão: Git e GitHub</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <h3>Front-end & Ferramentas</h3>
-        <ul>
-          <li>Web: HTML5, CSS3, JavaScript</li>
-          <li>Framework: Angular e TypeScript</li>
-          <li>Análise de Dados: Power BI (Processo ETL)</li>
-        </ul>
-      </div>
-      <div class="skill-group">
-        <h3>Habilidades Comportamentais</h3>
-        <ul>
-          <li>Organização e responsabilidade com prazos</li>
-          <li>Proatividade e autogerenciamento</li>
-          <li>Aprendizado contínuo e rápido</li>
-          <li>Resolução de problemas com foco prático</li>
-          <li>Trabalho em equipe e colaboração</li>
-        </ul>
+      <div class="reveal reveal-delay-2">
+        <div class="contato-form">
+          <div id="form-area">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" placeholder="Conte sobre a oportunidade ou projeto..."></textarea>
+            </div>
+            <button class="btn-form" id="btnEnviar">Enviar mensagem</button>
+          </div>
+          <div class="form-success" id="form-success">
+            <div style="font-size:2.5rem; margin-bottom:1rem;">✅</div>
+            <p>Mensagem enviada! Responderei em breve.</p>
+            <p style="color:var(--text-muted); font-size:.85rem; margin-top:.5rem;">
+              Ou me contate diretamente pelo LinkedIn
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="projetos" class="container">
-    <h2>Projetos</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="img/projetoWeb.png" alt="Screenshot do Sistema de E-commerce de Roupas">
-        <h3>Sistema de E-commerce de Roupas</h3>
-        <p>Página estática desenvolvida com HTML, CSS e JavaScript para demonstrar conhecimentos básicos em front-end, focando na experiência do usuário e na responsividade.</p>
-        <a href="https://github.com/GabrielVitorSZz/Sistema-de-E-commerce-de-roupas" target="_blank" class="btn">Ver no GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="img/projetoCRUD.png" alt="Screenshot do Gerenciador de Usuários">
-        <h3>Gerenciador de Usuários (CRUD)</h3>
-        <p>Sistema back-end para gerenciar usuários, utilizando Java (Swing) e JDBC para conexão com o banco de dados. Demonstra as operações básicas de persistência de dados.</p>
-        <a href="https://github.com/GabrielVitorSZz/projetoCRUD" target="_blank" class="btn">Ver no GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="img/projetoJavaFX.jpg" alt="Screenshot do Jogo da Memória">
-        <h3>Jogo da Memória (MVC)</h3>
-        <p>Jogo simples desenvolvido em Java (Swing) para demonstrar o padrão de arquitetura MVC, separando a lógica de negócio da interface do usuário.</p>
-        <a href="https://github.com/GabrielVitorSZz/JogoDaMemoriaFacul" target="_blank" class="btn">Ver no GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="img/dashboard.png" alt="Screenshot do Dashboard de Satisfação">
-        <h3>Dashboard de Satisfação para Viagens de Avião</h3>
-        <p>Dashboard analítico criado com Power BI, que inclui o processo completo de ETL para transformar dados brutos em insights visuais sobre a satisfação de passageiros.</p>
-        <a href="https://github.com/GabrielVitorSZz/Dashboard" target="_blank" class="btn">Ver no GitHub</a>
-      </div>
-    </div>
-  </section>
-</main>
-
+<!-- ── FOOTER ─────────────────────────── -->
 <footer>
-  <p>&copy; 2025 Gabriel Vítor. Todos os direitos reservados.</p>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>Gabriel Vítor Santos Oliveira</strong> · © <span id="ano"></span> ·
+        Feito com cuidado em Brasília, DF
+      </div>
+      <div class="footer-tech">
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>JavaScript</span>
+        <span>Google Fonts</span>
+        <span>Devicons CDN</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  /* ── CURSOR ─────────────────────────────── */
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  /* hover effects */
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      ring.style.width = '52px'; ring.style.height = '52px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '38px'; ring.style.height = '38px';
+    });
+  });
+
+  /* ── HAMBURGER ──────────────────────── */
+  const ham   = document.getElementById('hamburger');
+  const links = document.getElementById('navLinks');
+  ham.addEventListener('click', () => {
+    links.classList.toggle('open');
+    const spans = ham.querySelectorAll('span');
+    if (links.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity   = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      ham.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    });
+  });
+
+  /* ── SCROLL REVEAL ──────────────────── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── NAVBAR SCROLL ──────────────────── */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.boxShadow = window.scrollY > 30
+      ? '0 2px 30px rgba(0,0,0,0.5)'
+      : 'none';
+  });
+
+  /* ── ANO FOOTER ─────────────────────── */
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  /* ── FORM ───────────────────────────── */
+  document.getElementById('btnEnviar').addEventListener('click', () => {
+    const nome  = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const msg   = document.getElementById('mensagem').value.trim();
+
+    if (!nome || !email || !msg) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    const mailBody = encodeURIComponent(
+      `Nome: ${nome}\nE-mail: ${email}\n\n${msg}`
+    );
+    window.location.href =
+      `mailto:gabrielvitorx7@gmail.com?subject=Contato pelo portfólio – ${nome}&body=${mailBody}`;
+
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  });
+
+  /* ── HERO STAGGER ANIMATION ─────────── */
+  window.addEventListener('load', () => {
+    const items = document.querySelectorAll(
+      '.hero-badge, .hero-name, .hero-title, .hero-tagline, .hero-actions, .hero-socials, .hero-stats'
+    );
+    items.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      setTimeout(() => {
+        el.style.transition = 'opacity .6s ease, transform .6s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 200 + i * 110);
+    });
+  });
+</script>
 </body>
 </html>
